@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ClazzDao">
+    <select id="selectClazzs" resultType="pojo.Clazz">
+        select * from clazz
+    </select>
+
+    <select id="getStudentCount" resultType="pojo.Clazz">
+        select clazz.cname,clazz.cid,count(student.id)snum
+        from clazz LEFT JOIN student on student.clazz = clazz.cname
+        GROUP BY clazz.cname desc
+    </select>
+
+    <select id="selectClazzsByCid" resultType="pojo.Clazz">
+        select * from clazz where cid = #{cid}
+    </select>
+
+    <select id="findClazz" parameterType="String" resultType="pojo.Clazz">
+        select clazz.cname,clazz.cid,count(student.id)snum
+        from clazz LEFT JOIN student on student.clazz = clazz.cname
+        where cname = #{cname}
+        GROUP BY clazz.cname
+    </select>
+
+    <insert id="insertClazz" parameterType="pojo.Clazz">
+        insert into clazz (cname)
+        values (#{cname})
+    </insert>
+
+    <delete id="deleteClazz" parameterType="pojo.Clazz">
+        delete from clazz where cid = #{cid}
+    </delete>
+
+    <update id="updateClazz" parameterType="pojo.Clazz">
+        update clazz
+        <set>
+            cname = #{cname}
+        </set>
+        where cid = #{cid}
+    </update>
+
+</mapper>
